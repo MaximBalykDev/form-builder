@@ -7,8 +7,8 @@
     </li>
   </ul>
   <ul class="nav">
-    <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
-    <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/register" routerLinkActive="active">Register</a>
+    <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/auth/login" routerLinkActive="active">Login</a>
+    <a class="nav-link" *ngIf="!_authService.loggedIn()" routerLink="/auth/register" routerLinkActive="active">Register</a>
     <a class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()">Logout</a>
   </ul>
 

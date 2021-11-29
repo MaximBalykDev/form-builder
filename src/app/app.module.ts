@@ -7,12 +7,12 @@ import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './modules/auth/register/register.component';
+import { LoginComponent } from './modules/auth/login/login.component';
 import { AuthService } from './service/auth.service';
 import { AuthGuard } from './service/auth.guard';
 import { TokenInterceptorService } from './intreceptor/token-interceptor.service';
-import { FormBuilderComponent } from './form-builder/form-builder.component';
+import { FormBuilderComponent } from './modules/form-builder/form-builder/form-builder.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import {elementReducer} from "./store/reducer/element.reducer";

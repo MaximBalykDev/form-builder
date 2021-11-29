@@ -1,16 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EventService } from '../service/event.service';
+import { EventService } from '../../../service/event.service';
 import { moveItemInArray, CdkDragDrop, copyArrayItem} from '@angular/cdk/drag-drop';
-import { Elements } from '../mock-elements';
+import { Elements } from '../../../mock-elements';
 import {Store} from "@ngrx/store";
-import {addElement, changeStyle, moveItemInStore, removeElement} from "../store/action/element.action";
+import {addElement, changeStyle, moveItemInStore, removeElement} from "../../../store/action/element.action";
 import { map, Observable,  } from "rxjs";
-import {selectCountElement, storeElements} from "../store/selector/element.selector";
-import {Element} from "../data/interface";
+import {selectCountElement, storeElements} from "../../../store/selector/element.selector";
+import {Element} from "../../../data/interface";
 import {FormControl, FormGroup} from "@angular/forms";
-import {ENamesElements} from "../data/enum";
+import {ENamesElements} from "../../../data/enum";
 
 type ElementDrop = HTMLElement & {name : string};
 

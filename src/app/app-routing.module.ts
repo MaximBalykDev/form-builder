@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './service/auth.guard';
-import { FormBuilderComponent } from './form-builder/form-builder.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { FormBuilderComponent } from './modules/form-builder/form-builder/form-builder.component';
 
 const routes: Routes = [
   {
@@ -17,13 +15,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'auth',
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
   },
   {
-    path: 'register',
-    component: RegisterComponent
+    path: 'formBuilder',
+    loadChildren: () => import('./modules/form-builder/form-builder.module').then(m => m.FormBuilderModule)
   }
+
 ];
 
 @NgModule({
