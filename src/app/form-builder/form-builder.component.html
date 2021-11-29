@@ -1,0 +1,245 @@
+<div class="forms-section">
+  <div class="styleSection">
+    <cdk-accordion class="example-accordion">
+      <cdk-accordion-item
+        #accordionItem="cdkAccordionItem"
+        class="example-accordion-item"
+        role="button"
+        tabindex="0"
+        [attr.aria-expanded]="accordionItem.expanded"
+      >
+        <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+          Styles
+          <span class="example-accordion-item-description">
+            Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+          </span>
+        </div>
+        <div
+          class="example-accordion-item-body"
+          role="region"
+          [style.display]="accordionItem.expanded ? '' : 'none'"
+        >
+          <ng-container *ngIf="currentElementFromStore">
+            <form
+              [formGroup]="form"
+              (ngSubmit)="submit(currentElementFromStore?.id)"
+              class="form-style"
+            >
+              <ng-container
+                *ngFor="let option of currentElementFromStore | keyvalue"
+              >
+                <mat-card-title
+                  *ngIf="option.value  === namesElements.Button
+                   || option.value  === namesElements.TextArea
+                   || option.value  === namesElements.Input
+                   || option.value  === namesElements.CheckBox
+                   || option.value  === namesElements.Select"
+                >
+                  Element name: {{currentElementFromStore.name}}
+                </mat-card-title>
+
+                <mat-card-content>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value === namesElements.Button
+                     || option.value === namesElements.TextArea
+                     || option.value === namesElements.Input
+                     || option.value === namesElements.CheckBox
+                     || option.value === namesElements.Select"
+                  >
+                    <mat-label>Width: {{currentElementFromStore?.styles?.width}}</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      placeholder="new width"
+                      formControlName="width"
+                      class="form-control"
+                    >
+                  </mat-form-field>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.Button
+                     || option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input
+                     || option.value  === namesElements.CheckBox
+                     || option.value  === namesElements.Select"
+                    class="form-group mb-2"
+                  >
+                    <mat-label>Height: {{currentElementFromStore?.styles?.height}}</mat-label>
+                    <input matInput class="form-control" type="text" placeholder="new height" formControlName="height">
+                  </mat-form-field>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.Button
+                     || option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input
+                     || option.value  === namesElements.Select"
+                    class="form-group mb-2"
+                  >
+                    <mat-label>Border: {{currentElementFromStore?.styles?.border}}</mat-label>
+                    <input matInput class="form-control" type="text" placeholder="new border" formControlName="border">
+                  </mat-form-field>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.Button
+                     || option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input
+                     || option.value  === namesElements.Select"
+                  >
+                    <mat-label>FontSize</mat-label>
+                    <mat-select formControlName="fontSize">
+                      <mat-option [value]="'12px'">12px</mat-option>
+                      <mat-option [value]="'14px'">14px</mat-option>
+                      <mat-option [value]="'16px'">16px</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.Button
+                     || option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input
+                     || option.value  === namesElements.Select"
+                  >
+                    <mat-label>FontWeight</mat-label>
+                    <mat-select formControlName="fontWeight">
+                      <mat-option [value]="'bold'">bold</mat-option>
+                      <mat-option [value]="'normal'">normal</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.Button
+                     || option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input
+                     || option.value  === namesElements.CheckBox
+                     || option.value  === namesElements.Select"
+                    class="form-group mb-2"
+                  >
+                    <mat-label>Color: {{currentElementFromStore?.styles?.color}}</mat-label>
+                    <input matInput class="form-control" type="color" formControlName="color">
+                  </mat-form-field>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.Button"
+                    class="form-group mb-2"
+                  >
+                    <mat-label>BackgroundColor: {{currentElementFromStore?.styles?.backgroundColor}}</mat-label>
+                    <input matInput class="form-control" type="color" formControlName="backgroundColor">
+                  </mat-form-field>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.Button"
+                    class="form-group mb-2"
+                  >
+                    <mat-label>Value: {{currentElementFromStore?.styles?.value}}</mat-label>
+                    <input matInput class="form-control" type="text" placeholder="new value" formControlName="value">
+                  </mat-form-field>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.TextArea || option.value  === namesElements.Input "
+                    class="form-group mb-2"
+                  >
+                    <mat-label>placeholder: {{currentElementFromStore?.styles?.placeholder}}</mat-label>
+                    <input matInput class="form-control" type="text" placeholder="new placeholder" formControlName="placeholder">
+                  </mat-form-field>
+                </mat-card-content>
+                <div class="form-group">
+                  <button
+                    type="submit"
+                    mat-button color="primary"
+                    *ngIf="option.value  === namesElements.Button
+                     || option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input
+                     || option.value  === namesElements.CheckBox
+                     || option.value  === namesElements.Select"
+                  >Change style</button>
+                  <button
+                    mat-button color="warn"
+                    type="button"
+                    (click)="removeElement(currentElementFromStore?.id)"
+                    *ngIf="option.value  === namesElements.Button
+                     || option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input
+                     || option.value  === namesElements.CheckBox
+                     || option.value  === namesElements.Select"
+                  >Delete element</button>
+                </div>
+
+              </ng-container>
+            </form>
+          </ng-container>
+        </div>
+      </cdk-accordion-item>
+    </cdk-accordion>
+  </div>
+
+  <div class="section-group" cdkDropListGroup>
+
+    <div
+      cdkDropList
+      (cdkDropListDropped)="onDrop($event)"
+      [cdkDropListData]="elementForDrop"
+      class="dropSection"
+    >
+      <mat-card>
+        <mat-card-title>Form</mat-card-title>
+        <ng-container class="drop-item" *ngFor="let element of elementForDrop" [ngSwitch]="element.name">
+          <div cdkDrag class="drop-item"  *ngSwitchCase="'textarea'">
+            <textarea
+              *ngSwitchCase="'textarea'"
+              [ngStyle]="element.styles"
+              [placeholder]="element.styles.placeholder"
+              (click)="onSelect(element)"
+            ></textarea>
+          </div>
+          <div cdkDrag class="drop-item"  *ngSwitchCase="'button'">
+            <button
+              [ngStyle]="element.styles"
+              (click)="onSelect(element)"
+            >{{element.styles.value}}</button>
+          </div>
+          <div cdkDrag class="drop-item"  *ngSwitchCase="'input'">
+            <input
+              class="drag-item input"
+              type="text"
+              [placeholder]="element.styles.placeholder"
+              [ngStyle]="element.styles"
+              (click)="onSelect(element)"
+            >
+          </div>
+          <div cdkDrag class="drop-item"  *ngSwitchCase="'checkbox'">
+            <div
+              [ngStyle]="element.styles"
+              class="checkbox-element"
+              (click)="onSelect(element)"
+            >
+              <input  type="checkbox" [id]="element.id" name="interest" [value]="element.styles.value">
+              <label [for]="element.id">Coding</label>
+            </div>
+          </div>
+          <div cdkDrag class="drop-item"  *ngSwitchCase="'select'">
+            <select
+              class="drag-item select"
+              [ngStyle]="element.styles"
+              (click)="onSelect(element)"
+              [value]="element.values.value"
+            >
+              <option value="option 1">{{element.values.value}}</option>
+            </select>
+          </div>
+        </ng-container>
+      </mat-card>
+    </div>
+
+    <div
+      cdkDropList
+      (cdkDropListDropped)="onDrop($event)"
+      [cdkDropListData]="dragElement"
+      [cdkDropListEnterPredicate]="noReturnPredicate"
+      class="dragSection"
+    >
+      <div
+        cdkDrag
+        cdkDragLockAxis="x"
+        class="drag-item"
+        *ngFor="let element of dragElement"
+      >
+        {{element.name}}
+      </div>
+    </div>
+
+  </div>
+
+</div>
