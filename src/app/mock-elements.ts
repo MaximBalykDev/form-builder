@@ -2,7 +2,7 @@ import { Element } from './interfaces/interface';
 
 export const Elements: Element[] = [
   {
-    id: '1',
+    id: '',
     name: 'button',
     styles: {
       width: '100px',
@@ -17,7 +17,7 @@ export const Elements: Element[] = [
   },
 
   {
-    id: '2',
+    id: '',
     name: 'textarea',
     styles: {
       width: '100%',
@@ -33,7 +33,7 @@ export const Elements: Element[] = [
   },
 
   {
-    id: '3',
+    id: '',
     name: 'input',
     styles: {
       width: '100%',
@@ -49,17 +49,17 @@ export const Elements: Element[] = [
   },
 
   {
-    id: '4',
+    id: '',
     name: 'checkbox',
     styles: {
-      width: '100px',
+      width: '150px',
       height: '30px',
       color: '#000000',
     },
   },
 
   {
-    id: '5',
+    id: '',
     name: 'select',
     styles: {
       width: '100px',
@@ -67,7 +67,7 @@ export const Elements: Element[] = [
       border: '1px solid black',
       fontSize: '16px',
       fontWeight: 'normal',
-      color: '#000000',
+      color: 'red',
     },
     values: [
       {

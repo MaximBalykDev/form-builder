@@ -19,6 +19,7 @@
           role="region"
           [style.display]="accordionItem.expanded ? '' : 'none'"
         >
+          <mat-card-title  *ngIf="isNoItemSelected">Please select item</mat-card-title>
           <ng-container *ngIf="currentElementFromStore">
             <form
               [formGroup]="form"
@@ -66,6 +67,7 @@
                     <mat-label>Height: {{currentElementFromStore?.styles?.height}}</mat-label>
                     <input matInput class="form-control" type="text" placeholder="new height" formControlName="height">
                   </mat-form-field>
+
                   <mat-form-field appearance="fill"
                     *ngIf="option.value  === namesElements.Button
                      || option.value  === namesElements.TextArea
@@ -73,33 +75,73 @@
                      || option.value  === namesElements.Select"
                     class="form-group mb-2"
                   >
-                    <mat-label>Border: {{currentElementFromStore?.styles?.border}}</mat-label>
-                    <input matInput class="form-control" type="text" placeholder="new border" formControlName="border">
+                    <mat-label>Border width:</mat-label>
+                    <mat-select formControlName="borderWidth">
+                      <mat-option [value]="'thin'">thin</mat-option>
+                      <mat-option [value]="'medium '">medium</mat-option>
+                      <mat-option [value]="'thick '">thick</mat-option>
+                    </mat-select>
                   </mat-form-field>
                   <mat-form-field appearance="fill"
                     *ngIf="option.value  === namesElements.Button
                      || option.value  === namesElements.TextArea
                      || option.value  === namesElements.Input
                      || option.value  === namesElements.Select"
+                    class="form-group mb-2"
                   >
-                    <mat-label>FontSize</mat-label>
-                    <mat-select formControlName="fontSize">
-                      <mat-option [value]="'12px'">12px</mat-option>
-                      <mat-option [value]="'14px'">14px</mat-option>
-                      <mat-option [value]="'16px'">16px</mat-option>
+                    <mat-label>Border style:</mat-label>
+                    <mat-select formControlName="borderStyle">
+                      <mat-option [value]="'none '">none </mat-option>
+                      <mat-option [value]="'dotted'">dotted</mat-option>
+                      <mat-option [value]="'dashed'">dashed</mat-option>
+                      <mat-option [value]="'solid  '">solid </mat-option>
                     </mat-select>
+                  </mat-form-field>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.Button
+                     || option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input
+                     || option.value  === namesElements.Select"
+                    class="form-group mb-2"
+                  >
+                    <mat-label>Border color:</mat-label>
+                    <input matInput class="form-control" type="color" formControlName="borderColor">
                   </mat-form-field>
 
                   <mat-form-field appearance="fill"
                     *ngIf="option.value  === namesElements.Button
                      || option.value  === namesElements.TextArea
                      || option.value  === namesElements.Input
+                     || option.value  === namesElements.CheckBox
+                     || option.value  === namesElements.Select"
+                  >
+                    <mat-label>FontSize:{{currentElementFromStore?.styles?.fontSize}}</mat-label>
+                    <input matInput class="form-control" type="text" placeholder="new FontSize" formControlName="fontSize">
+
+                  </mat-form-field>
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.Button
+                     || option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input
+                     || option.value  === namesElements.CheckBox
                      || option.value  === namesElements.Select"
                   >
                     <mat-label>FontWeight</mat-label>
                     <mat-select formControlName="fontWeight">
                       <mat-option [value]="'bold'">bold</mat-option>
                       <mat-option [value]="'normal'">normal</mat-option>
+                      <mat-option [value]="'lighter'">lighter</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="fill"
+                    *ngIf="option.value  === namesElements.TextArea
+                     || option.value  === namesElements.Input"
+                  >
+                    <mat-label>Required</mat-label>
+                    <mat-select formControlName="required">
+                      <mat-option [value]="'true'">true</mat-option>
+                      <mat-option [value]="'false'">false</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <mat-form-field appearance="fill"
@@ -175,7 +217,7 @@
     >
       <mat-card>
         <mat-card-title>Form</mat-card-title>
-        <ng-container class="drop-item" *ngFor="let element of elementForDrop" [ngSwitch]="element.name">
+        <ng-container class="drop-item" *ngFor="let element of elementForDrop" [ngSwitch]="element.name" >
           <div cdkDrag class="drop-item"  *ngSwitchCase="'textarea'">
             <textarea
               *ngSwitchCase="'textarea'"
@@ -206,19 +248,21 @@
               (click)="onSelect(element)"
             >
               <input  type="checkbox" [id]="element.id" name="interest" [value]="element.styles.value">
-              <label [for]="element.id">Coding</label>
+              <label [for]="element.id">Choose your destiny</label>
             </div>
           </div>
           <div cdkDrag class="drop-item"  *ngSwitchCase="'select'">
             <select
               class="drag-item select"
-              [ngStyle]="element.styles"
               (click)="onSelect(element)"
-              [value]="element.values.value"
+              [ngStyle]="element.styles"
+              style="padding: 0"
             >
-              <option value="option 1">{{element.values.value}}</option>
+              <option value="option">Option</option>
+              <option value="option">Option2</option>
             </select>
           </div>
+
         </ng-container>
       </mat-card>
     </div>
@@ -232,7 +276,6 @@
     >
       <div
         cdkDrag
-        cdkDragLockAxis="x"
         class="drag-item"
         *ngFor="let element of dragElement"
       >

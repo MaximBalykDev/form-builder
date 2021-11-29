@@ -43,6 +43,7 @@ export const elementReducer = createReducer(
 
   on(moveItemInStore, (state, newOrderData) => {
     let objectValues = Object.values(newOrderData)
+    objectValues.pop()
     return objectValues
   })
 

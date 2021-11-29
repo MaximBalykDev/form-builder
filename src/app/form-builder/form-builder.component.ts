@@ -32,6 +32,7 @@ export class FormBuilderComponent implements OnInit {
   dragElement = Elements
 
   namesElements = ENamesElements
+  isNoItemSelected = true
 
   constructor(private _eventService: EventService,
     private _router: Router,
@@ -58,7 +59,9 @@ export class FormBuilderComponent implements OnInit {
       id: new FormControl(''),
       width: new FormControl(''),
       height: new FormControl(''),
-      border: new FormControl(''),
+      borderWidth: new FormControl(''),
+      borderColor: new FormControl(''),
+      borderStyle: new FormControl(''),
       fontSize: new FormControl(''),
       fontWeight: new FormControl(''),
       color: new FormControl(''),
@@ -81,7 +84,9 @@ export class FormBuilderComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      this.store.dispatch(moveItemInStore(event.container.data))
+      if(!!event.container.data[0].id){
+        this.store.dispatch(moveItemInStore(event.container.data))
+      }
     } else {
       copyArrayItem(
         event.previousContainer.data,
@@ -109,6 +114,7 @@ export class FormBuilderComponent implements OnInit {
         this.form.patchValue(res[0]?.styles)
       }
     )
+    this.isNoItemSelected = false
   }
 
   noReturnPredicate() {
@@ -123,6 +129,7 @@ export class FormBuilderComponent implements OnInit {
 
   removeElement(id:string) {
     this.store.dispatch(removeElement({id}))
+    this.isNoItemSelected = true
     this.currentElementFromStore = []
   }
 
