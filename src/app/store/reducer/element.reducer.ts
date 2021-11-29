@@ -1,6 +1,6 @@
 import { createReducer, on} from "@ngrx/store";
 import {addElement, changeStyle, clearElement, moveItemInStore, removeElement} from "../action/element.action";
-import { Element } from "../../interfaces/interface";
+import { Element } from "../../data/interface";
 
 export const initialElementEntries: Element[] | any = [];
 

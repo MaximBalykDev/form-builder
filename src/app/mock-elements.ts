@@ -1,4 +1,4 @@
-import { Element } from './interfaces/interface';
+import { Element } from './data/interface';
 
 export const Elements: Element[] = [
   {
@@ -67,7 +67,7 @@ export const Elements: Element[] = [
       border: '1px solid black',
       fontSize: '16px',
       fontWeight: 'normal',
-      color: 'red',
+      color: 'black',
     },
     values: [
       {

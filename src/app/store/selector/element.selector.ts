@@ -1,4 +1,4 @@
-import { Element } from "../../interfaces/interface";
+import { Element } from "../../data/interface";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 export const selectCountElement = createSelector(

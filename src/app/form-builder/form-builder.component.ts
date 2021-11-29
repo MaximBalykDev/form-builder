@@ -6,10 +6,11 @@ import { moveItemInArray, CdkDragDrop, copyArrayItem} from '@angular/cdk/drag-dr
 import { Elements } from '../mock-elements';
 import {Store} from "@ngrx/store";
 import {addElement, changeStyle, moveItemInStore, removeElement} from "../store/action/element.action";
-import {filter, map, Observable, pipe } from "rxjs";
+import { map, Observable,  } from "rxjs";
 import {selectCountElement, storeElements} from "../store/selector/element.selector";
-import {Element, ENamesElements} from "../interfaces/interface";
+import {Element} from "../data/interface";
 import {FormControl, FormGroup} from "@angular/forms";
+import {ENamesElements} from "../data/enum";
 
 type ElementDrop = HTMLElement & {name : string};
 

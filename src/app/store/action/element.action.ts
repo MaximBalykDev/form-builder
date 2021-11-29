@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import {Element} from "../../interfaces/interface";
+import {Element} from "../../data/interface";
 
 export const clearElement = createAction('Clear Element')
 export const addElement = createAction('Add Element', props<Element>())

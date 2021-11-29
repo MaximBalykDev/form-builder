@@ -28,10 +28,3 @@ export interface Style extends IObjectKeys {
   required: boolean;
 }
 
-export enum ENamesElements {
-  Button = 'button',
-  Input = 'input',
-  Select = 'select',
-  TextArea = 'textarea',
-  CheckBox = 'checkbox'
-}
