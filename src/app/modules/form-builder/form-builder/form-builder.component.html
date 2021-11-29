@@ -47,13 +47,14 @@
                      || option.value === namesElements.CheckBox
                      || option.value === namesElements.Select"
                   >
-                    <mat-label>Width: {{currentElementFromStore?.styles?.width}}</mat-label>
+                    <mat-label>Width:</mat-label>
                     <input
                       matInput
-                      type="text"
+                      type="number"
                       placeholder="new width"
                       formControlName="width"
                       class="form-control"
+                      required
                     >
                   </mat-form-field>
                   <mat-form-field appearance="fill"
@@ -64,8 +65,16 @@
                      || option.value  === namesElements.Select"
                     class="form-group mb-2"
                   >
-                    <mat-label>Height: {{currentElementFromStore?.styles?.height}}</mat-label>
-                    <input matInput class="form-control" type="text" placeholder="new height" formControlName="height">
+                    <mat-label>Height:</mat-label>
+                    <input
+                      matInput
+                      class="form-control"
+                      type="number"
+                      placeholder="new height"
+                      formControlName="height"
+                      [value]="currentElementFromStore?.styles?.height"
+                      required
+                    >
                   </mat-form-field>
 
                   <mat-form-field appearance="fill"
@@ -116,8 +125,14 @@
                      || option.value  === namesElements.Select"
                   >
                     <mat-label>FontSize:{{currentElementFromStore?.styles?.fontSize}}</mat-label>
-                    <input matInput class="form-control" type="text" placeholder="new FontSize" formControlName="fontSize">
-
+                    <mat-select formControlName="fontSize">
+                      <mat-option [value]="'8px'">8px</mat-option>
+                      <mat-option [value]="'10px'">10px</mat-option>
+                      <mat-option [value]="'12px'">12px</mat-option>
+                      <mat-option [value]="'14px'">14px</mat-option>
+                      <mat-option [value]="'16px'">16px</mat-option>
+                      <mat-option [value]="'18px'">18px</mat-option>
+                    </mat-select>
                   </mat-form-field>
                   <mat-form-field appearance="fill"
                     *ngIf="option.value  === namesElements.Button
@@ -222,6 +237,7 @@
             <textarea
               *ngSwitchCase="'textarea'"
               [ngStyle]="element.styles"
+              class="restrictionsWidthHeight"
               [placeholder]="element.styles.placeholder"
               (click)="onSelect(element)"
             ></textarea>
@@ -230,21 +246,23 @@
             <button
               [ngStyle]="element.styles"
               (click)="onSelect(element)"
+              class="restrictionsWidthHeight"
             >{{element.styles.value}}</button>
           </div>
           <div cdkDrag class="drop-item"  *ngSwitchCase="'input'">
             <input
-              class="drag-item input"
+              class="drag-item restrictionsWidthHeight"
               type="text"
               [placeholder]="element.styles.placeholder"
               [ngStyle]="element.styles"
+              [style]="{maxHeight: '200px', maxWidth: '400px'}"
               (click)="onSelect(element)"
             >
           </div>
           <div cdkDrag class="drop-item"  *ngSwitchCase="'checkbox'">
             <div
               [ngStyle]="element.styles"
-              class="checkbox-element"
+              class="checkbox-element restrictionsWidthHeight"
               (click)="onSelect(element)"
             >
               <input  type="checkbox" [id]="element.id" name="interest" [value]="element.styles.value">
@@ -253,7 +271,7 @@
           </div>
           <div cdkDrag class="drop-item"  *ngSwitchCase="'select'">
             <select
-              class="drag-item select"
+              class="drag-item restrictionsWidthHeight"
               (click)="onSelect(element)"
               [ngStyle]="element.styles"
               style="padding: 0"

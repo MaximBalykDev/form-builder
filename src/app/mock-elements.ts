@@ -20,7 +20,7 @@ export const Elements: Element[] = [
     id: '',
     name: 'textarea',
     styles: {
-      width: '100%',
+      width: '150px',
       height: '30px',
       border: '1px solid black',
       fontSize: '16px',
@@ -36,7 +36,7 @@ export const Elements: Element[] = [
     id: '',
     name: 'input',
     styles: {
-      width: '100%',
+      width: '150px',
       height: '30px',
       border: '1px solid black',
       fontSize: '16px',

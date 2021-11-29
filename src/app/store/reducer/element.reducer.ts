@@ -21,7 +21,11 @@ export const elementReducer = createReducer(
       if(el.id === element.id){
         return {
           ...el,
-          styles: element
+          styles: {
+            ...element,
+            width: typeof(element.width) === 'number' ? element.width + 'px' : element.width ,
+            height: typeof(element.height) === 'number' ? element.height + 'px' : element.height
+          }
         };
       } else {
         return el

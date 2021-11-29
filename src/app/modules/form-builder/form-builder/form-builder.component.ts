@@ -58,8 +58,8 @@ export class FormBuilderComponent implements OnInit {
 
     this.form = new FormGroup( {
       id: new FormControl(''),
-      width: new FormControl(''),
-      height: new FormControl(''),
+      width: new FormControl(``),
+      height: new FormControl(``),
       borderWidth: new FormControl(''),
       borderColor: new FormControl(''),
       borderStyle: new FormControl(''),
@@ -123,7 +123,6 @@ export class FormBuilderComponent implements OnInit {
   }
 
   submit(id?:string) {
-    console.log(id)
     const formData = {...this.form.value, id: id}
     this.store.dispatch(changeStyle(formData))
   }
