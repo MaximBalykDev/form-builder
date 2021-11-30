@@ -1,23 +1,22 @@
 import { createReducer, on} from "@ngrx/store";
-import {addElement, changeStyle, clearElement, moveItemInStore, removeElement} from "../action/element.action";
-import { Element } from "../../data/interface";
+import {addElement, changeStyle, moveItemInStore, removeElement} from "../action/element.action";
+import {Element} from "../../data/interface";
 
-export const initialElementEntries: Element[] | any = [];
+export const initialElementEntries:  any = [];
 
 export const elementReducer = createReducer(
   initialElementEntries,
-  on(clearElement, () => []),
 
   on(addElement, (state, element) => {
-    const elementWithUniqeId = {
+    const elementWithUniqueId = {
       ...element,
       id: new Date()
     }
-    return [...state, elementWithUniqeId]
+    return [...state, elementWithUniqueId]
   }),
 
   on(changeStyle, (state, element) => {
-    const changedStates = state.map((el:any )=> {
+    return state.map((el:Element) => {
       if(el.id === element.id){
         return {
           ...el,
@@ -31,18 +30,14 @@ export const elementReducer = createReducer(
         return el
       }
     })
-
-    return changedStates;
   }),
 
   on(removeElement, (state, currentEl) => {
-    const changedState = state.filter((el:any) => {
+    return state.filter((el: Element):Element | void => {
       if (el.id !== currentEl.id){
         return el
       }
     })
-    console.log('changedState', changedState)
-    return changedState
   }),
 
   on(moveItemInStore, (state, newOrderData) => {

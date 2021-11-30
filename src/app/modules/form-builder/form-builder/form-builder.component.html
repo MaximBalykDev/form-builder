@@ -23,7 +23,6 @@
           <ng-container *ngIf="currentElementFromStore">
             <form
               [formGroup]="form"
-              (ngSubmit)="submit(currentElementFromStore?.id)"
               class="form-style"
             >
               <ng-container
@@ -47,13 +46,14 @@
                      || option.value === namesElements.CheckBox
                      || option.value === namesElements.Select"
                   >
-                    <mat-label>Width:</mat-label>
+                    <mat-label>Width:{{currentElementFromStore.styles.width}}</mat-label>
                     <input
                       matInput
                       type="number"
                       placeholder="new width"
                       formControlName="width"
                       class="form-control"
+                      (change)="submit(currentElementFromStore?.id)"
                       required
                     >
                   </mat-form-field>
@@ -65,14 +65,14 @@
                      || option.value  === namesElements.Select"
                     class="form-group mb-2"
                   >
-                    <mat-label>Height:</mat-label>
+                    <mat-label>Height: {{currentElementFromStore.styles.height}}</mat-label>
                     <input
                       matInput
                       class="form-control"
                       type="number"
                       placeholder="new height"
                       formControlName="height"
-                      [value]="currentElementFromStore?.styles?.height"
+                      (change)="submit(currentElementFromStore?.id)"
                       required
                     >
                   </mat-form-field>
@@ -85,8 +85,8 @@
                     class="form-group mb-2"
                   >
                     <mat-label>Border width:</mat-label>
-                    <mat-select formControlName="borderWidth">
-                      <mat-option [value]="'thin'">thin</mat-option>
+                    <mat-select formControlName="borderWidth" (selectionChange)="submit(currentElementFromStore?.id)">
+                      <mat-option [value]="'thin'" >thin</mat-option>
                       <mat-option [value]="'medium '">medium</mat-option>
                       <mat-option [value]="'thick '">thick</mat-option>
                     </mat-select>
@@ -99,7 +99,7 @@
                     class="form-group mb-2"
                   >
                     <mat-label>Border style:</mat-label>
-                    <mat-select formControlName="borderStyle">
+                    <mat-select formControlName="borderStyle" (selectionChange)="submit(currentElementFromStore?.id)">
                       <mat-option [value]="'none '">none </mat-option>
                       <mat-option [value]="'dotted'">dotted</mat-option>
                       <mat-option [value]="'dashed'">dashed</mat-option>
@@ -114,7 +114,13 @@
                     class="form-group mb-2"
                   >
                     <mat-label>Border color:</mat-label>
-                    <input matInput class="form-control" type="color" formControlName="borderColor">
+                    <input
+                      matInput
+                      class="form-control"
+                      type="color"
+                      formControlName="borderColor"
+                      (change)="submit(currentElementFromStore?.id)"
+                    >
                   </mat-form-field>
 
                   <mat-form-field appearance="fill"
@@ -125,7 +131,7 @@
                      || option.value  === namesElements.Select"
                   >
                     <mat-label>FontSize:{{currentElementFromStore?.styles?.fontSize}}</mat-label>
-                    <mat-select formControlName="fontSize">
+                    <mat-select formControlName="fontSize" (selectionChange)="submit(currentElementFromStore?.id)">
                       <mat-option [value]="'8px'">8px</mat-option>
                       <mat-option [value]="'10px'">10px</mat-option>
                       <mat-option [value]="'12px'">12px</mat-option>
@@ -142,7 +148,7 @@
                      || option.value  === namesElements.Select"
                   >
                     <mat-label>FontWeight</mat-label>
-                    <mat-select formControlName="fontWeight">
+                    <mat-select formControlName="fontWeight" (selectionChange)="submit(currentElementFromStore?.id)">
                       <mat-option [value]="'bold'">bold</mat-option>
                       <mat-option [value]="'normal'">normal</mat-option>
                       <mat-option [value]="'lighter'">lighter</mat-option>
@@ -154,7 +160,7 @@
                      || option.value  === namesElements.Input"
                   >
                     <mat-label>Required</mat-label>
-                    <mat-select formControlName="required">
+                    <mat-select formControlName="required" (selectionChange)="submit(currentElementFromStore?.id)">
                       <mat-option [value]="'true'">true</mat-option>
                       <mat-option [value]="'false'">false</mat-option>
                     </mat-select>
@@ -168,53 +174,66 @@
                     class="form-group mb-2"
                   >
                     <mat-label>Color: {{currentElementFromStore?.styles?.color}}</mat-label>
-                    <input matInput class="form-control" type="color" formControlName="color">
+                    <input
+                      matInput
+                      class="form-control"
+                      type="color"
+                      formControlName="color"
+                      (change)="submit(currentElementFromStore?.id)"
+                    >
                   </mat-form-field>
                   <mat-form-field appearance="fill"
                     *ngIf="option.value  === namesElements.Button"
                     class="form-group mb-2"
                   >
                     <mat-label>BackgroundColor: {{currentElementFromStore?.styles?.backgroundColor}}</mat-label>
-                    <input matInput class="form-control" type="color" formControlName="backgroundColor">
+                    <input
+                      matInput
+                      class="form-control"
+                      type="color"
+                      formControlName="backgroundColor"
+                      (change)="submit(currentElementFromStore?.id)"
+                    >
                   </mat-form-field>
                   <mat-form-field appearance="fill"
                     *ngIf="option.value  === namesElements.Button"
                     class="form-group mb-2"
                   >
                     <mat-label>Value: {{currentElementFromStore?.styles?.value}}</mat-label>
-                    <input matInput class="form-control" type="text" placeholder="new value" formControlName="value">
+                    <input
+                      matInput
+                      class="form-control"
+                      type="text"
+                      placeholder="new value"
+                      formControlName="value"
+                      (change)="submit(currentElementFromStore?.id)"
+                    >
                   </mat-form-field>
                   <mat-form-field appearance="fill"
                     *ngIf="option.value  === namesElements.TextArea || option.value  === namesElements.Input "
                     class="form-group mb-2"
                   >
                     <mat-label>placeholder: {{currentElementFromStore?.styles?.placeholder}}</mat-label>
-                    <input matInput class="form-control" type="text" placeholder="new placeholder" formControlName="placeholder">
+                    <input
+                      matInput
+                      class="form-control"
+                      type="text"
+                      placeholder="new placeholder"
+                      formControlName="placeholder"
+                      (change)="submit(currentElementFromStore?.id)"
+                    >
                   </mat-form-field>
                 </mat-card-content>
-                <div class="form-group">
-                  <button
-                    type="submit"
-                    mat-button color="primary"
-                    *ngIf="option.value  === namesElements.Button
-                     || option.value  === namesElements.TextArea
-                     || option.value  === namesElements.Input
-                     || option.value  === namesElements.CheckBox
-                     || option.value  === namesElements.Select"
-                  >Change style</button>
-                  <button
-                    mat-button color="warn"
-                    type="button"
-                    (click)="removeElement(currentElementFromStore?.id)"
-                    *ngIf="option.value  === namesElements.Button
-                     || option.value  === namesElements.TextArea
-                     || option.value  === namesElements.Input
-                     || option.value  === namesElements.CheckBox
-                     || option.value  === namesElements.Select"
-                  >Delete element</button>
-                </div>
-
               </ng-container>
+              <div class="form-group" *ngIf="!isNoItemSelected">
+                <button
+                  mat-button color="warn"
+                  type="button"
+                  (click)="removeElement(currentElementFromStore?.id)"
+                >
+                  Delete element
+                </button>
+              </div>
             </form>
           </ng-container>
         </div>

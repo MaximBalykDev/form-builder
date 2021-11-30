@@ -8,6 +8,7 @@ export interface Element {
       value: string;
     },
   ];
+  type?:string;
 }
 
 interface IObjectKeys {
@@ -28,3 +29,23 @@ export interface Style extends IObjectKeys {
   required: boolean;
 }
 
+export interface IFormGroup {
+  id: string,
+  width: string,
+  height: string,
+  borderWidth: string,
+  borderColor: string,
+  borderStyle: string,
+  fontSize: string,
+  fontWeight: string,
+  color: string,
+  backgroundColor: string,
+  value: string,
+  placeholder: string,
+  required: string,
+}
+
+export interface IUser {
+  email: string,
+  password: string
+}

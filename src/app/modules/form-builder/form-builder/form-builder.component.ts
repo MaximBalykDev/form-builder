@@ -1,13 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { EventService } from '../../../service/event.service';
-import { moveItemInArray, CdkDragDrop, copyArrayItem} from '@angular/cdk/drag-drop';
-import { Elements } from '../../../mock-elements';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {EventService} from '../../../service/event.service';
+import {CdkDragDrop, copyArrayItem, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Elements} from '../../../mock-elements';
 import {Store} from "@ngrx/store";
 import {addElement, changeStyle, moveItemInStore, removeElement} from "../../../store/action/element.action";
-import { map, Observable,  } from "rxjs";
-import {selectCountElement, storeElements} from "../../../store/selector/element.selector";
+import {map, Observable,} from "rxjs";
+import {storeElements} from "../../../store/selector/element.selector";
 import {Element} from "../../../data/interface";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ENamesElements} from "../../../data/enum";
@@ -17,19 +17,18 @@ type ElementDrop = HTMLElement & {name : string};
 @Component({
   selector: 'app-form-builder',
   templateUrl: './form-builder.component.html',
-  styleUrls: ['./form-builder.component.scss']
+  styleUrls: ['./form-builder.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class FormBuilderComponent implements OnInit {
   selectedElement?: ElementDrop;
   formBuilder = []
-  selectedCountElements$: Observable<any>
   storeElements$: Observable<any>
   selectedEl?: Element
   currentElementFromStore?: Element | any
   elementForDrop?:any
   form!: FormGroup
-  dropElement: any = [];
   dragElement = Elements
 
   namesElements = ENamesElements
@@ -39,7 +38,6 @@ export class FormBuilderComponent implements OnInit {
     private _router: Router,
     private store: Store
   ){
-    this.selectedCountElements$ = store.select(selectCountElement)
     this.storeElements$ = store.select(storeElements)
   }
 
@@ -60,17 +58,16 @@ export class FormBuilderComponent implements OnInit {
       id: new FormControl(''),
       width: new FormControl(``),
       height: new FormControl(``),
-      borderWidth: new FormControl(''),
-      borderColor: new FormControl(''),
-      borderStyle: new FormControl(''),
-      fontSize: new FormControl(''),
-      fontWeight: new FormControl(''),
+      borderWidth: new FormControl('thin'),
+      borderColor: new FormControl('black'),
+      borderStyle: new FormControl('solid'),
+      fontSize: new FormControl('14px'),
+      fontWeight: new FormControl('normal'),
       color: new FormControl(''),
       backgroundColor: new FormControl(''),
       value: new FormControl(''),
       placeholder: new FormControl(''),
       required: new FormControl(''),
-      label: new FormControl(''),
     })
 
     this.storeElements$.subscribe(
@@ -78,14 +75,14 @@ export class FormBuilderComponent implements OnInit {
     )
   }
 
-  onDrop(event: CdkDragDrop<any[]>) {
+  onDrop(event: CdkDragDrop<Element[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
-      if(!!event.container.data[0].id){
+      if(!!event.container.data[0].id) {
         this.store.dispatch(moveItemInStore(event.container.data))
       }
     } else {
@@ -100,12 +97,12 @@ export class FormBuilderComponent implements OnInit {
     }
   }
 
-  onSelect(element: any) {
+  onSelect(element: Element) {
     this.form.reset()
     this.selectedEl = element;
     this.storeElements$.pipe(
       map((elements:any) => {
-        return elements.filter((el: any) =>{
+        return elements.filter((el: Element) =>{
           return el.id === this.selectedEl?.id
         })
       })
