@@ -4,9 +4,10 @@ import { FormBuilderComponent } from './form-builder.component';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { FormBuilderModule } from "../form-builder.module";
-import {FormBuilder} from "@angular/forms";
-import {ActionsSubject, ReducerManager, ReducerManagerDispatcher, StateObservable, Store} from "@ngrx/store";
-import {InjectionToken} from "@angular/core";
+
+import {provideMockStore} from "@ngrx/store/testing";
+import {FormsModule} from "@angular/forms";
+import {CdkAccordionModule} from "@angular/cdk/accordion";
 
 describe('FormBuilderComponent', () => {
   let component: FormBuilderComponent;
@@ -19,14 +20,11 @@ describe('FormBuilderComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         FormBuilderModule,
+        FormsModule,
+        CdkAccordionModule
       ],
-      providers: [FormBuilder,
-        Store,
-        StateObservable,
-        ActionsSubject,
-        ReducerManager,
-        ReducerManagerDispatcher,
-        InjectionToken ]
+      providers: [provideMockStore(),
+        ]
     })
       .compileComponents();
   });
@@ -37,5 +35,13 @@ describe('FormBuilderComponent', () => {
     fixture.detectChanges();
   });
 
+  it('should create component', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('function noReturnPredicate should always return false', () => {
+    const res = component.noReturnPredicate()
+    expect(res).toBeFalsy();
+  });
 
 });

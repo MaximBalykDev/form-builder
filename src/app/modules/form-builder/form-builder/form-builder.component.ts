@@ -129,5 +129,4 @@ export class FormBuilderComponent implements OnInit {
     this.isNoItemSelected = true
     this.currentElementFromStore = []
   }
-
 }
