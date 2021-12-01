@@ -6,7 +6,7 @@ import { FormBuilderComponent } from './modules/form-builder/form-builder/form-b
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/events',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {

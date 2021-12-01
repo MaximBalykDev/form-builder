@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilderRoutingModule} from "./form-builder-routing.module";
+
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    FormBuilderRoutingModule
-  ]
+    FormBuilderRoutingModule,
+  ],
+
 })
+
 export class FormBuilderModule { }

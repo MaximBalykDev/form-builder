@@ -6,7 +6,7 @@ import {AuthGuard} from "../../service/auth.guard";
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/formBuilder',
+    redirectTo: 'formBuilder',
     pathMatch: 'full'
   },
   {

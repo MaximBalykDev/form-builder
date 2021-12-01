@@ -1,7 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {EventService} from '../../../service/event.service';
+import { FormBuilderService } from '../../../service/formBuilder.service';
 import {CdkDragDrop, copyArrayItem, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Elements} from '../../../mock-elements';
 import {Store} from "@ngrx/store";
@@ -24,7 +24,7 @@ type ElementDrop = HTMLElement & {name : string};
 export class FormBuilderComponent implements OnInit {
   selectedElement?: ElementDrop;
   formBuilder = []
-  storeElements$: Observable<any>
+  storeElements$: Observable<Element[]>
   selectedEl?: Element
   currentElementFromStore?: Element | any
   elementForDrop?:any
@@ -34,15 +34,15 @@ export class FormBuilderComponent implements OnInit {
   namesElements = ENamesElements
   isNoItemSelected = true
 
-  constructor(private _eventService: EventService,
-    private _router: Router,
-    private store: Store
+  constructor(public _formBuilderService: FormBuilderService,
+    public _router: Router,
+    public store: Store
   ){
     this.storeElements$ = store.select(storeElements)
   }
 
   ngOnInit(): void {
-    this._eventService.getSpecialEvents()
+    this._formBuilderService.getFormBuilder()
       .subscribe(
         res => this.formBuilder = res,
         err => {
