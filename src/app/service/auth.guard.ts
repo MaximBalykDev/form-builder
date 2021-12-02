@@ -3,7 +3,7 @@ import { Router, CanActivate, UrlTree } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
 
@@ -12,10 +12,10 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this._authService.loggedIn()){
-      return true
+      return true;
     } else {
-      this._router.navigate(['/login'])
-      return false
+      this._router.navigate(['/login']);
+      return false;
     }
   }
 }

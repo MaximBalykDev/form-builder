@@ -7,12 +7,12 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'auth',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'formBuilder',
     component: FormBuilderComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'auth',
@@ -20,13 +20,13 @@ const routes: Routes = [
   },
   {
     path: 'formBuilder',
-    loadChildren: () => import('./modules/form-builder/form-builder.module').then(m => m.FormBuilderModule)
-  }
+    loadChildren: () => import('./modules/form-builder/form-builder.module').then(m => m.FormBuilderModule),
+  },
 
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

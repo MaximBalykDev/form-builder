@@ -1,44 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
 
-  form!: FormGroup
+  form!: FormGroup;
+  registerUserData: any = {};
 
-  registerUserData: any = {}
   constructor(private _auth: AuthService,
     private _router: Router,
-    private fb: FormBuilder
-    ) { }
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group( {
       email: ['', [
         Validators.email,
-        Validators.required
+        Validators.required,
       ]],
       password: [null, [
         Validators.minLength(6),
-        Validators.required
-      ]]
-    })
+        Validators.required,
+      ]],
+    });
   }
 
   registerUser() {
     this._auth.registerUser(this.registerUserData)
       .subscribe(
         res => {
-          localStorage.setItem('token', res.token)
-          this._router.navigate(['/formBuilder'])
+          localStorage.setItem('token', res.token);
+          this._router.navigate(['/formBuilder']);
         },
-        err => console.log(err)
-      )
+        err => console.log(err),
+      );
   }
 }

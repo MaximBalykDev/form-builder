@@ -6,42 +6,43 @@ import { AuthService } from '../../../service/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
 
-  form!: FormGroup
+  form!: FormGroup;
   loginIsInvalid: boolean = false;
 
-  loginUserData:any = {}
+  loginUserData:any = {};
   constructor(private _auth: AuthService,
     private _router: Router,
-    private fb: FormBuilder
-    ) { }
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group( {
       email: ['', [
         Validators.email,
-        Validators.required
+        Validators.required,
       ]],
       password: [null, [
         Validators.minLength(6),
-        Validators.required
-      ]]
-    })
+        Validators.required,
+      ]],
+    });
   }
 
   loginUser() {
     this._auth.loginUser(this.loginUserData)
       .subscribe(
         res => {
-          localStorage.setItem('token', res.token)
-          this._router.navigate(['./formBuilder'])
+          localStorage.setItem('token', res.token);
+          this._router.navigate(['./formBuilder']);
         },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         err =>
-          this.loginIsInvalid = true
-      )
+          this.loginIsInvalid = true,
+      );
   }
 
 }

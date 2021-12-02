@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilderComponent } from './form-builder.component';
 
-import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { RouterTestingModule } from "@angular/router/testing";
-import { FormBuilderModule } from "../form-builder.module";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormBuilderModule } from '../form-builder.module';
 
-import {provideMockStore} from "@ngrx/store/testing";
-import {FormsModule} from "@angular/forms";
-import {CdkAccordionModule} from "@angular/cdk/accordion";
+import { provideMockStore } from '@ngrx/store/testing';
+import { FormsModule } from '@angular/forms';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
 
 describe('FormBuilderComponent', () => {
   let component: FormBuilderComponent;
@@ -21,10 +21,10 @@ describe('FormBuilderComponent', () => {
         RouterTestingModule,
         FormBuilderModule,
         FormsModule,
-        CdkAccordionModule
+        CdkAccordionModule,
       ],
       providers: [provideMockStore(),
-        ]
+      ],
     })
       .compileComponents();
   });
@@ -40,7 +40,8 @@ describe('FormBuilderComponent', () => {
   });
 
   it('function noReturnPredicate should always return false', () => {
-    const res = component.noReturnPredicate()
+    const res = component.noReturnPredicate();
+
     expect(res).toBeFalsy();
   });
 

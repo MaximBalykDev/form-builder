@@ -3,5 +3,5 @@ export enum ENamesElements {
   Input = 'input',
   Select = 'select',
   TextArea = 'textarea',
-  CheckBox = 'checkbox'
+  CheckBox = 'checkbox',
 }

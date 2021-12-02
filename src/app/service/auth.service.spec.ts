@@ -1,9 +1,9 @@
-import {inject, TestBed} from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {RouterTestingModule} from "@angular/router/testing";
-import {Router} from "@angular/router";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('AuthService', () => {
   let routerMock = { navigate: jasmine.createSpy('navigate') };
@@ -27,7 +27,14 @@ describe('AuthService', () => {
 
   it('should show token after call getToken', inject([AuthService], (authService: AuthService) => {
     const result = authService.getToken();
+
     expect(result).toBeNull();
+  }));
+
+  it('should delete token from local storage', inject([AuthService], (authService: AuthService) => {
+    authService.logoutUser();
+
+    expect(localStorage.getItem('token')).toBeNull();
   }));
 
 });
