@@ -45,4 +45,17 @@ describe('FormBuilderComponent', () => {
     expect(res).toBeFalsy();
   });
 
+  it('onInit declare form', ( async() => {
+    const fixture = TestBed.createComponent(FormBuilderComponent);
+    const component = fixture.componentInstance;
+    await component.ngOnInit();
+    expect(component.form).toBeDefined();
+  }));
+
+  it('removeElement should delete element from array', ( async() => {
+    const fixture = TestBed.createComponent(FormBuilderComponent);
+    const component = fixture.componentInstance;
+
+  }));
+
 });

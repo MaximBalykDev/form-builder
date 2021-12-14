@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { IUser } from '../data/interface';
+
+import { IToken, IUser } from '../data/interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private registerUrl = 'http://localhost:3000/api/register';
+  private loginUrl = 'http://localhost:3000/api/login';
 
-  private _registerUrl = 'http://localhost:3000/api/register';
-  private _loginUrl = 'http://localhost:3000/api/login';
+  constructor(private http: HttpClient, private router: Router) {}
 
-  constructor(private http: HttpClient,
-    private _router: Router) { }
-
-  registerUser(user:IUser) {
-    return this.http.post<any>(this._registerUrl, user);
+  registerUser(user: IUser): Observable<IToken> {
+    return this.http.post<IToken>(this.registerUrl, user);
   }
 
-  loginUser(user:IUser) {
-    return this.http.post<any>(this._loginUrl, user);
+  loginUser(user: IUser): Observable<IToken> {
+    return this.http.post<IToken>(this.loginUrl, user);
   }
 
-  loggedIn() {
+  loggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
 
-  logoutUser() {
+  logoutUser(): void {
     localStorage.removeItem('token');
-    this._router.navigate(['/auth/login']);
+    this.router.navigate(['/auth/login']);
   }
 
-  getToken() {
+  getToken(): string | null {
     return localStorage.getItem('token');
   }
 }

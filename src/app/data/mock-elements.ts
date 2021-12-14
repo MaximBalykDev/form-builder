@@ -1,4 +1,4 @@
-import { Element } from './data/interface';
+import { Element } from './interface';
 
 export const Elements: Element[] = [
   {

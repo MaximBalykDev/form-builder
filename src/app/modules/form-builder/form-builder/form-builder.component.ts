@@ -1,18 +1,31 @@
-import { HttpErrorResponse  } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilderService } from '../../../service/formBuilder.service';
-import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Elements } from '../../../mock-elements';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import {
+  CdkDragDrop,
+  copyArrayItem,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
+import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { addElement, changeStyle, moveItemInStore, removeElement } from '../../../store/action/element.action';
-import { map, Observable } from 'rxjs';
-import { storeElements } from '../../../store/selector/element.selector';
-import { Element } from '../../../data/interface';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ENamesElements } from '../../../data/enum';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 
-type ElementDrop = HTMLElement & { name : string };
+import { Elements } from '../../../data/mock-elements';
+import {
+  addElement,
+  changeStyle,
+  moveItemInStore,
+  removeElement,
+} from '../../../store/action/element.action';
+import { storeElements } from '../../../store/selector/element.selector';
+import { Element, IFormBuilder } from '../../../data/interface';
+import { ENamesElements } from '../../../data/enum';
+import { formControls } from '../../../data/constants';
+
+type ElementDrop = HTMLElement & { name: string };
 
 @Component({
   selector: 'app-form-builder',
@@ -20,113 +33,91 @@ type ElementDrop = HTMLElement & { name : string };
   styleUrls: ['./form-builder.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
-export class FormBuilderComponent implements OnInit {
+export class FormBuilderComponent implements OnInit, OnDestroy {
   selectedElement?: ElementDrop;
-  formBuilder = [];
+  formBuilder: IFormBuilder[];
   storeElements$: Observable<Element[]>;
-  selectedEl?: Element;
-  currentElementFromStore?: Element | any;
-  elementForDrop?:any;
+  currentElementFromStore?: Element;
+  elementForDrop: Element[] = Elements;
   form!: FormGroup;
-  dragElement = Elements;
-
+  dragElement: Element[] = Elements;
+  isNoItemSelected: boolean = true;
+  unsubscribe$: Subject<void> = new Subject();
   namesElements = ENamesElements;
-  isNoItemSelected = true;
 
-  constructor(public _formBuilderService: FormBuilderService,
-    public _router: Router,
-    public store: Store,
-  ){
+  constructor(private store: Store) {
+    this.formBuilder = [];
     this.storeElements$ = store.select(storeElements);
   }
 
   ngOnInit(): void {
-    this._formBuilderService.getFormBuilder()
-      .subscribe(
-        res => this.formBuilder = res,
-        err => {
-          if (err instanceof HttpErrorResponse) {
-            if (err.status === 401) {
-              this._router.navigate(['/login']);
-            }
-          }
-        },
-      );
-
-    this.form = new FormGroup( {
-      id: new FormControl(''),
-      width: new FormControl(''),
-      height: new FormControl(''),
-      borderWidth: new FormControl('thin'),
-      borderColor: new FormControl('black'),
-      borderStyle: new FormControl('solid'),
-      fontSize: new FormControl('14px'),
-      fontWeight: new FormControl('normal'),
-      color: new FormControl(''),
-      backgroundColor: new FormControl(''),
-      value: new FormControl(''),
-      placeholder: new FormControl(''),
-      required: new FormControl(''),
-    });
-
-    this.storeElements$.subscribe(
-      res => this.elementForDrop = res,
-    );
+    this.form = new FormGroup(formControls);
+    this.storeElements$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((res) => (this.elementForDrop = res));
   }
 
-  onDrop(event: CdkDragDrop<Element[]>) {
+  onDrop(event: CdkDragDrop<Element[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
       if (!!event.container.data[0].id) {
-        this.store.dispatch(moveItemInStore(event.container.data));
+        this.store.dispatch(
+          moveItemInStore({ elements: event.container.data })
+        );
       }
     } else {
       copyArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
       let index = Object.values(event.container.data);
       this.store.dispatch(addElement(index[event.currentIndex]));
     }
   }
 
-  onSelect(element: Element) {
+  onSelect(element: Element): void {
     this.form.reset();
-    this.selectedEl = element;
-    this.storeElements$.pipe(
-      map((elements:any) => {
-        return elements.filter((el: Element) =>{
-          return el.id === this.selectedEl?.id;
-        });
-      }),
-    ).subscribe(
-      res => {
-        this.currentElementFromStore = res[0];
-        this.form.patchValue(res[0]?.styles);
-      },
-    );
+    this.currentElementFromStore = element;
+    this.storeElements$
+      .pipe(
+        map((elements: Element[]) => {
+          return elements.filter((el: Element) => {
+            return el.id === this.currentElementFromStore?.id;
+          });
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((res) => {
+        if (res.length) {
+          this.form.patchValue(res[0].styles!);
+        }
+      });
     this.isNoItemSelected = false;
   }
 
-  noReturnPredicate() {
+  noReturnPredicate(): boolean {
     return false;
   }
 
-  submit(id?:string) {
+  submit(id: string): void {
     const formData = { ...this.form.value, id: id };
     this.store.dispatch(changeStyle(formData));
   }
 
-  removeElement(id:string) {
-    this.store.dispatch(removeElement({ id } ));
+  removeElement(id: string): void {
+    this.store.dispatch(removeElement({ id }));
     this.isNoItemSelected = true;
-    this.currentElementFromStore = [];
+    this.currentElementFromStore = undefined;
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

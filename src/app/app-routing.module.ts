@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { AuthGuard } from './service/auth.guard';
 import { FormBuilderComponent } from './modules/form-builder/form-builder/form-builder.component';
 
@@ -10,7 +11,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'formBuilder',
+    path: 'form-Builder',
     component: FormBuilderComponent,
     canActivate: [AuthGuard],
   },
@@ -19,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
   },
   {
-    path: 'formBuilder',
+    path: 'form-Builder',
     loadChildren: () => import('./modules/form-builder/form-builder.module').then(m => m.FormBuilderModule),
   },
 
