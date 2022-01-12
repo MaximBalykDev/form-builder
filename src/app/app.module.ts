@@ -50,12 +50,15 @@ import { environment } from '../environments/environment';
       logOnly: environment.production,
     }),
   ],
-  providers: [AuthService, AuthGuard,
+  providers: [
+    AuthService,
+    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true,
-    }],
+    },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

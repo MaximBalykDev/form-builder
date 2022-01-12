@@ -7,18 +7,18 @@ import { FormBuilderComponent } from './modules/form-builder/form-builder/form-b
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'form-Builder',
     pathMatch: 'full',
   },
   {
     path: 'form-Builder',
     component: FormBuilderComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
-  {
-    path: 'auth',
-    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
-  },
+  // {
+  //   path: 'auth',
+  //   loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
+  // },
   {
     path: 'form-Builder',
     loadChildren: () => import('./modules/form-builder/form-builder.module').then(m => m.FormBuilderModule),
